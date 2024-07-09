@@ -1,6 +1,6 @@
 import cv2 as cv
 import numpy as np
-import operatorADIP
+import operator_21120525
 
 input_image = np.array((
  [0, 0, 0, 0, 0, 0, 0, 0],
