@@ -1,7 +1,8 @@
 import cv2 as cv
 import numpy as np
 
-#Nhat Phong: 
+#2120525 - Cao Nhật Phong
+#Cài đặt các toán tử sau
 
 def hit_or_miss_and_display(input_image, kernel, rate=50):
     output_image = cv.morphologyEx(input_image, cv.MORPH_HITMISS, kernel)
