@@ -1,0 +1,320 @@
+[
+    {
+        "label": "cv2",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "cv2",
+        "description": "cv2",
+        "detail": "cv2",
+        "documentation": {}
+    },
+    {
+        "label": "numpy",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "numpy",
+        "description": "numpy",
+        "detail": "numpy",
+        "documentation": {}
+    },
+    {
+        "label": "operatorADIP",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "operatorADIP",
+        "description": "operatorADIP",
+        "detail": "operatorADIP",
+        "documentation": {}
+    },
+    {
+        "label": "pyplot",
+        "importPath": "matplotlib",
+        "description": "matplotlib",
+        "isExtraImport": true,
+        "detail": "matplotlib",
+        "documentation": {}
+    },
+    {
+        "label": "pyplot",
+        "importPath": "matplotlib",
+        "description": "matplotlib",
+        "isExtraImport": true,
+        "detail": "matplotlib",
+        "documentation": {}
+    },
+    {
+        "label": "Tk",
+        "importPath": "tkinter",
+        "description": "tkinter",
+        "isExtraImport": true,
+        "detail": "tkinter",
+        "documentation": {}
+    },
+    {
+        "label": "Tk",
+        "importPath": "tkinter",
+        "description": "tkinter",
+        "isExtraImport": true,
+        "detail": "tkinter",
+        "documentation": {}
+    },
+    {
+        "label": "askopenfilename",
+        "importPath": "tkinter.filedialog",
+        "description": "tkinter.filedialog",
+        "isExtraImport": true,
+        "detail": "tkinter.filedialog",
+        "documentation": {}
+    },
+    {
+        "label": "askopenfilename",
+        "importPath": "tkinter.filedialog",
+        "description": "tkinter.filedialog",
+        "isExtraImport": true,
+        "detail": "tkinter.filedialog",
+        "documentation": {}
+    },
+    {
+        "label": "input_image",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "input_image = np.array((\n [0, 0, 0, 0, 0, 0, 0, 0],\n [0, 255, 255, 255, 0, 0, 0, 255],\n [0, 255, 255, 255, 0, 0, 0, 0],\n [0, 255, 255, 255, 0, 255, 0, 0],\n [0, 0, 255, 0, 0, 0, 0, 0],\n [0, 0, 255, 0, 0, 255, 255, 0],\n [0, 255, 0, 255, 0, 0, 255, 0],\n [0, 255, 255, 255, 0, 0, 0, 0]), dtype=\"uint8\")\nkernel = np.array((",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "kernel",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "kernel = np.array((\n [0, 1, 0],\n [1, -1, 1],\n [0, 1, 0]), dtype=\"int\")\n#operatorADIP.hit_or_miss_and_display(input_image, kernel)\n#operatorADIP.binary_region_filling(input_image, (1, 1))\n#operatorADIP.grayscale_opening(input_image, kernel)\n#operatorADIP.grayscale_morphology_gradient(input_image, kernel)\n#operatorADIP.binary_opening(input_image, kernel)\n#operatorADIP.binary_thinning(input_image)",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "hit_or_miss_and_display",
+        "kind": 2,
+        "importPath": "operatorADIP",
+        "description": "operatorADIP",
+        "peekOfCode": "def hit_or_miss_and_display(input_image, kernel, rate=50):\n    output_image = cv.morphologyEx(input_image, cv.MORPH_HITMISS, kernel)\n    kernel_display = (kernel + 1) * 127\n    kernel_display = np.uint8(kernel_display)\n    kernel_display = cv.resize(kernel_display, None, fx=rate, fy=rate, interpolation=cv.INTER_NEAREST)\n    cv.imshow(\"kernel\", kernel_display)\n    cv.moveWindow(\"kernel\", 0, 0)\n    input_image_display = cv.resize(input_image, None, fx=rate, fy=rate, interpolation=cv.INTER_NEAREST)\n    cv.imshow(\"Original\", input_image_display)\n    cv.moveWindow(\"Original\", 0, 200)",
+        "detail": "operatorADIP",
+        "documentation": {}
+    },
+    {
+        "label": "binary_region_filling",
+        "kind": 2,
+        "importPath": "operatorADIP",
+        "description": "operatorADIP",
+        "peekOfCode": "def binary_region_filling(input_image, seed_point, rate=50):\n    h, w = input_image.shape\n    output_image = np.zeros((h, w), np.uint8)\n    output_image[seed_point] = 255\n    prev_image = output_image.copy()\n    while True:\n        dilated_image = cv.dilate(output_image, None, iterations=1)\n        output_image = cv.bitwise_and(dilated_image, input_image)\n        if np.array_equal(prev_image, output_image):\n            break",
+        "detail": "operatorADIP",
+        "documentation": {}
+    },
+    {
+        "label": "grayscale_opening",
+        "kind": 2,
+        "importPath": "operatorADIP",
+        "description": "operatorADIP",
+        "peekOfCode": "def grayscale_opening(input_image, kernel, rate=50):\n    kernel = np.uint8(kernel)\n    output_image = cv.morphologyEx(input_image, cv.MORPH_OPEN, kernel)\n    kernel_display = (kernel + 1) * 127\n    kernel_display = np.uint8(kernel_display)\n    kernel_display = cv.resize(kernel_display, None, fx=rate, fy=rate, interpolation=cv.INTER_NEAREST)\n    cv.imshow(\"kernel\", kernel_display)\n    cv.moveWindow(\"kernel\", 0, 0)\n    input_image_display = cv.resize(input_image, None, fx=rate, fy=rate, interpolation=cv.INTER_NEAREST)\n    cv.imshow(\"Original\", input_image_display)",
+        "detail": "operatorADIP",
+        "documentation": {}
+    },
+    {
+        "label": "grayscale_morphology_gradient",
+        "kind": 2,
+        "importPath": "operatorADIP",
+        "description": "operatorADIP",
+        "peekOfCode": "def grayscale_morphology_gradient(input_image, kernel, rate=50):\n    kernel = np.uint8(kernel)\n    output_image = cv.morphologyEx(input_image, cv.MORPH_GRADIENT, kernel)\n    kernel_display = (kernel + 1) * 127\n    kernel_display = np.uint8(kernel_display)\n    kernel_display = cv.resize(kernel_display, None, fx=rate, fy=rate, interpolation=cv.INTER_NEAREST)\n    cv.imshow(\"kernel\", kernel_display)\n    cv.moveWindow(\"kernel\", 0, 0)\n    input_image_display = cv.resize(input_image, None, fx=rate, fy=rate, interpolation=cv.INTER_NEAREST)\n    cv.imshow(\"Original\", input_image_display)",
+        "detail": "operatorADIP",
+        "documentation": {}
+    },
+    {
+        "label": "binary_opening",
+        "kind": 2,
+        "importPath": "operatorADIP",
+        "description": "operatorADIP",
+        "peekOfCode": "def binary_opening(input_image, kernel, rate=50):\n    kernel = np.uint8(kernel)\n    output_image = cv.morphologyEx(input_image, cv.MORPH_OPEN, kernel)\n    kernel_display = (kernel + 1) * 127\n    kernel_display = np.uint8(kernel_display)\n    kernel_display = cv.resize(kernel_display, None, fx=rate, fy=rate, interpolation=cv.INTER_NEAREST)\n    cv.imshow(\"kernel\", kernel_display)\n    cv.moveWindow(\"kernel\", 0, 0)\n    input_image_display = cv.resize(input_image, None, fx=rate, fy=rate, interpolation=cv.INTER_NEAREST)\n    cv.imshow(\"Original\", input_image_display)",
+        "detail": "operatorADIP",
+        "documentation": {}
+    },
+    {
+        "label": "binary_thinning",
+        "kind": 2,
+        "importPath": "operatorADIP",
+        "description": "operatorADIP",
+        "peekOfCode": "def binary_thinning(input_image, rate=50):\n    size = np.size(input_image)\n    skeleton = np.zeros(input_image.shape, np.uint8)\n    ret, input_image = cv.threshold(input_image, 127, 255, cv.THRESH_BINARY)\n    element = cv.getStructuringElement(cv.MORPH_CROSS, (3, 3))\n    done = False\n    while not done:\n        eroded = cv.erode(input_image, element)\n        temp = cv.dilate(eroded, element)\n        temp = cv.subtract(input_image, temp)",
+        "detail": "operatorADIP",
+        "documentation": {}
+    },
+    {
+        "label": "grayscale_top_hat_transformation",
+        "kind": 2,
+        "importPath": "operatorADIP",
+        "description": "operatorADIP",
+        "peekOfCode": "def grayscale_top_hat_transformation(input_image, kernel, rate=50):\n    kernel = np.uint8(kernel)\n    output_image = cv.morphologyEx(input_image, cv.MORPH_TOPHAT, kernel)\n    kernel_display = (kernel + 1) * 127\n    kernel_display = np.uint8(kernel_display)\n    kernel_display = cv.resize(kernel_display, None, fx=rate, fy=rate, interpolation=cv.INTER_NEAREST)\n    cv.imshow(\"kernel\", kernel_display)\n    cv.moveWindow(\"kernel\", 0, 0)\n    input_image_display = cv.resize(input_image, None, fx=rate, fy=rate, interpolation=cv.INTER_NEAREST)\n    cv.imshow(\"Original\", input_image_display)",
+        "detail": "operatorADIP",
+        "documentation": {}
+    },
+    {
+        "label": "grayscale_smoothing",
+        "kind": 2,
+        "importPath": "operator_20120029",
+        "description": "operator_20120029",
+        "peekOfCode": "def grayscale_smoothing(image):\n    # Người dùng chọn kernel\n    try:\n        kernel_size = int(input(\"Enter the kernel size (positive odd number, ex: 3 for a 3x3 kernel): \"))\n        if kernel_size <= 0 or kernel_size % 2 == 0:\n            raise ValueError(\"Kernel size must be a positive odd number.\")\n    except ValueError as e:\n        raise ValueError(f\"Invalid kernel size: {e}\")\n    kernel = np.ones((kernel_size, kernel_size), np.uint8)\n    smoothing = cv2.GaussianBlur(image, (kernel_size, kernel_size), 0)",
+        "detail": "operator_20120029",
+        "documentation": {}
+    },
+    {
+        "label": "grayscale_closing",
+        "kind": 2,
+        "importPath": "operator_20120029",
+        "description": "operator_20120029",
+        "peekOfCode": "def grayscale_closing(image):\n    try:\n        kernel_size = int(input(\"Enter the kernel size (positive odd number, ex: 3 for a 3x3 kernel): \"))\n        if kernel_size <= 0 or kernel_size % 2 == 0:\n            raise ValueError(\"Kernel size must be a positive odd number.\")\n    except ValueError as e:\n        raise ValueError(f\"Invalid kernel size: {e}\")\n    kernel = np.ones((kernel_size, kernel_size), np.uint8)\n    # Tính toán toán tử đóng\n    closing = cv2.morphologyEx(image, cv2.MORPH_CLOSE, kernel)",
+        "detail": "operator_20120029",
+        "documentation": {}
+    },
+    {
+        "label": "binary_closing",
+        "kind": 2,
+        "importPath": "operator_20120029",
+        "description": "operator_20120029",
+        "peekOfCode": "def binary_closing(image_path):\n    # Tải ảnh màu lên\n    color_image = cv2.imread(image_path, cv2.IMREAD_COLOR)\n    # Đổi từ ảnh màu sang ảnh mức xám\n    binary_image = cv2.cvtColor(color_image, cv2.COLOR_BGR2GRAY)\n    # Kiểm tra ảnh màu\n    _, binary_image = cv2.threshold(binary_image, 127, 255, cv2.THRESH_BINARY)\n    try:\n        kernel_size = int(input(\"Enter the kernel size (positive odd number, ex: 3 for a 3x3 kernel): \"))\n        if kernel_size <= 0 or kernel_size % 2 == 0:",
+        "detail": "operator_20120029",
+        "documentation": {}
+    },
+    {
+        "label": "grayscale_reconstruction",
+        "kind": 2,
+        "importPath": "operator_20120029",
+        "description": "operator_20120029",
+        "peekOfCode": "def grayscale_reconstruction(image):\n    kernel = np.ones((5, 5), np.uint8)\n    marker = cv2.erode(image, kernel, iterations=1)\n    # Tái tạo ảnh qua phép giãn nở\n    reconstructed = cv2.dilate(marker, kernel, iterations=1)\n    for i in range(10):\n        prev_reconstructed = reconstructed\n        reconstructed = cv2.min(image, cv2.dilate(reconstructed, kernel, iterations=1))\n        if np.array_equal(prev_reconstructed, reconstructed):\n            break",
+        "detail": "operator_20120029",
+        "documentation": {}
+    },
+    {
+        "label": "grayscale_textural_segmentation",
+        "kind": 2,
+        "importPath": "operator_20120029",
+        "description": "operator_20120029",
+        "peekOfCode": "def grayscale_textural_segmentation(image):\n    try:\n        kernel_size = int(input(\"Enter the kernel size (positive odd number, ex: 3 for a 3x3 kernel): \"))\n        if kernel_size <= 0 or kernel_size % 2 == 0:\n            raise ValueError(\"Kernel size must be a positive odd number.\")\n    except ValueError as e:\n        raise ValueError(f\"Invalid kernel size: {e}\")\n    kernel = np.ones((kernel_size, kernel_size), np.uint8)\n    # Tiến trình tính toán\n    closing = cv2.morphologyEx(image, cv2.MORPH_CLOSE, kernel)",
+        "detail": "operator_20120029",
+        "documentation": {}
+    },
+    {
+        "label": "grayscale_granulometry",
+        "kind": 2,
+        "importPath": "operator_20120029",
+        "description": "operator_20120029",
+        "peekOfCode": "def grayscale_granulometry(image):\n    # Khởi tạo mảng để lưu granulometry \n    sizes = []\n    granulometry = []\n    # Biểu diễn granulometry bằng toán tử mở độ xám với kích thước phần tử tăng dần\n    for size in range(1, 21, 2):  # Tăng kích thước phần tử\n        kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (size, size))\n        opened_image = cv2.morphologyEx(image, cv2.MORPH_OPEN, kernel)\n        # Tính toán chênh lệch pixel trước và sau khi mở\n        diff = cv2.absdiff(image, opened_image)",
+        "detail": "operator_20120029",
+        "documentation": {}
+    },
+    {
+        "label": "binary_convex_hull",
+        "kind": 2,
+        "importPath": "operator_20120029",
+        "description": "operator_20120029",
+        "peekOfCode": "def binary_convex_hull(image_path):\n    color_image = cv2.imread(image_path, cv2.IMREAD_COLOR)\n    gray_image = cv2.cvtColor(color_image, cv2.COLOR_BGR2GRAY)\n    # Làm mờ ảnh\n    blur = cv2.blur(gray_image, (3, 3))\n    # Ảnh threshold\n    _, binary_image = cv2.threshold(blur, 50, 255, cv2.THRESH_BINARY)\n    # Tìm đường viền ảnh\n    contours, _ = cv2.findContours(binary_image, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)\n    # Tìm bao lồi cho viền ảnh",
+        "detail": "operator_20120029",
+        "documentation": {}
+    },
+    {
+        "label": "menu",
+        "kind": 2,
+        "importPath": "operator_20120029",
+        "description": "operator_20120029",
+        "peekOfCode": "def menu():\n    print(\"--------------------- Menu ---------------------\")\n    print(\"1. Grayscale Smoothing\")\n    print(\"2. Grayscale Closing\")\n    print(\"3. Binary Closing\")\n    print(\"4. Grayscale Reconstruction\")\n    print(\"5. Grayscale Textural Segmentation\")\n    print(\"6. Grayscale Granulometry\")\n    print(\"7. Binary Convex Hull\")\n    print(\"0. Exit\")",
+        "detail": "operator_20120029",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "operator_20120029",
+        "description": "operator_20120029",
+        "peekOfCode": "def main():\n    # Ẩn cửa sổ do hàm Tk() gọi\n    Tk().withdraw()\n    # Người dùng chọn ảnh trên máy\n    image_path = askopenfilename(title=\"Select a grayscale image\",\n                                filetypes=[(\"Image files\", \"*.png;*.jpg;*.jpeg;*.bmp;*.tif;*.tiff\")])\n    # Kiểm tra file có tồn tại không\n    if not image_path:\n        raise FileNotFoundError(\"No file selected. Please select an image file.\")\n    # Tải ảnh mức xám lên, nếu là ảnh màu thì không thông qua hàm này",
+        "detail": "operator_20120029",
+        "documentation": {}
+    },
+    {
+        "label": "binary_erosion",
+        "kind": 2,
+        "importPath": "operator_21120184",
+        "description": "operator_21120184",
+        "peekOfCode": "def binary_erosion(image_path):\n    # Tải ảnh màu lên\n    color_image = cv2.imread(image_path, cv2.IMREAD_COLOR)\n    # Đổi từ ảnh màu sang ảnh mức xám\n    binary_image = cv2.cvtColor(color_image, cv2.COLOR_BGR2GRAY)\n    # Kiểm tra ảnh màu\n    _, binary_image = cv2.threshold(binary_image, 127, 255, cv2.THRESH_BINARY)\n    try:\n        kernel_size = int(input(\"Enter the kernel size (positive odd number, ex: 3 for a 3x3 kernel): \"))\n        if kernel_size <= 0 or kernel_size % 2 == 0:",
+        "detail": "operator_21120184",
+        "documentation": {}
+    },
+    {
+        "label": "binary_thickening",
+        "kind": 2,
+        "importPath": "operator_21120184",
+        "description": "operator_21120184",
+        "peekOfCode": "def binary_thickening(image_path):\n    # Tải ảnh màu lên\n    color_image = cv2.imread(image_path, cv2.IMREAD_COLOR)\n    # Đổi từ ảnh màu sang ảnh mức xám\n    binary_image = cv2.cvtColor(color_image, cv2.COLOR_BGR2GRAY)\n    # Kiểm tra ảnh màu\n    _, binary_image = cv2.threshold(binary_image, 127, 255, cv2.THRESH_BINARY)\n    try:\n        kernel_size = int(input(\"Enter the kernel size (positive odd number, ex: 3 for a 3x3 kernel): \"))\n        if kernel_size <= 0 or kernel_size % 2 == 0:",
+        "detail": "operator_21120184",
+        "documentation": {}
+    },
+    {
+        "label": "grayscale_erosion",
+        "kind": 2,
+        "importPath": "operator_21120184",
+        "description": "operator_21120184",
+        "peekOfCode": "def grayscale_erosion(image):\n    try:\n        kernel_size = int(input(\"Enter the kernel size (positive odd number, ex: 3 for a 3x3 kernel): \"))\n        if kernel_size <= 0 or kernel_size % 2 == 0:\n            raise ValueError(\"Kernel size must be a positive odd number.\")\n    except ValueError as e:\n        raise ValueError(f\"Invalid kernel size: {e}\")\n    kernel = np.ones((kernel_size, kernel_size), np.uint8)\n    # Tính toán toán tử erosion mức xám\n    erosion = cv2.erode(image, kernel, iterations=1)",
+        "detail": "operator_21120184",
+        "documentation": {}
+    },
+    {
+        "label": "grayscale_dilation",
+        "kind": 2,
+        "importPath": "operator_21120184",
+        "description": "operator_21120184",
+        "peekOfCode": "def grayscale_dilation(image):\n    try:\n        kernel_size = int(input(\"Enter the kernel size (positive odd number, ex: 3 for a 3x3 kernel): \"))\n        if kernel_size <= 0 or kernel_size % 2 == 0:\n            raise ValueError(\"Kernel size must be a positive odd number.\")\n    except ValueError as e:\n        raise ValueError(f\"Invalid kernel size: {e}\")\n    kernel = np.ones((kernel_size, kernel_size), np.uint8)\n    # Tính toán toán tử dilation mức xám\n    dilation = cv2.dilate(image, kernel, iterations=1)",
+        "detail": "operator_21120184",
+        "documentation": {}
+    },
+    {
+        "label": "binary_skeleton",
+        "kind": 2,
+        "importPath": "operator_21120184",
+        "description": "operator_21120184",
+        "peekOfCode": "def binary_skeleton(image_path):\n    color_image = cv2.imread(image_path, cv2.IMREAD_COLOR)\n    gray_image = cv2.cvtColor(color_image, cv2.COLOR_BGR2GRAY)\n    # Làm mờ ảnh\n    blur = cv2.blur(gray_image, (3, 3))\n    # Ảnh threshold\n    _, binary_image = cv2.threshold(blur, 50, 255, cv2.THRESH_BINARY)\n    # Tìm skeleton cho ảnh\n    size = np.size(binary_image)\n    skeleton = np.zeros(binary_image.shape, np.uint8)",
+        "detail": "operator_21120184",
+        "documentation": {}
+    },
+    {
+        "label": "binary_dilation",
+        "kind": 2,
+        "importPath": "operator_21120184",
+        "description": "operator_21120184",
+        "peekOfCode": "def binary_dilation(image_path):\n    color_image = cv2.imread(image_path, cv2.IMREAD_COLOR)\n    gray_image = cv2.cvtColor(color_image, cv2.COLOR_BGR2GRAY)\n    # Làm mờ ảnh\n    blur = cv2.blur(gray_image, (3, 3))\n    # Ảnh threshold\n    _, binary_image = cv2.threshold(blur, 50, 255, cv2.THRESH_BINARY)\n    try:\n        kernel_size = int(input(\"Enter the kernel size (positive odd number, ex: 3 for a 3x3 kernel): \"))\n        if kernel_size <= 0 or kernel_size % 2 == 0:",
+        "detail": "operator_21120184",
+        "documentation": {}
+    },
+    {
+        "label": "binary_boundary_extraction",
+        "kind": 2,
+        "importPath": "operator_21120184",
+        "description": "operator_21120184",
+        "peekOfCode": "def binary_boundary_extraction(image_path):\n    color_image = cv2.imread(image_path, cv2.IMREAD_COLOR)\n    gray_image = cv2.cvtColor(color_image, cv2.COLOR_BGR2GRAY)\n    # Làm mờ ảnh\n    blur = cv2.blur(gray_image, (3, 3))\n    # Ảnh threshold\n    _, binary_image = cv2.threshold(blur, 50, 255, cv2.THRESH_BINARY)\n    try:\n        kernel_size = int(input(\"Enter the kernel size (positive odd number, ex: 3 for a 3x3 kernel): \"))\n        if kernel_size <= 0 or kernel_size % 2 == 0:",
+        "detail": "operator_21120184",
+        "documentation": {}
+    },
+    {
+        "label": "menu",
+        "kind": 2,
+        "importPath": "operator_21120184",
+        "description": "operator_21120184",
+        "peekOfCode": "def menu():\n    print(\"--------------------- Menu ---------------------\")\n    print(\"1. Binary Erosion\")\n    print(\"2. Binary Thickening\")\n    print(\"3. Grayscale Erosion\")\n    print(\"4. Grayscale Dilation\")\n    print(\"5. Binary Skeleton\")\n    print(\"6. Binary Dilation\")\n    print(\"7. Binary Boundary Extraction\")\n    print(\"0. Exit\")",
+        "detail": "operator_21120184",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "operator_21120184",
+        "description": "operator_21120184",
+        "peekOfCode": "def main():\n    # Ẩn cửa sổ do hàm Tk() gọi\n    Tk().withdraw()\n    # Người dùng chọn ảnh trên máy\n    image_path = askopenfilename(title=\"Select a grayscale image\",\n                                filetypes=[(\"Image files\", \"*.png;*.jpg;*.jpeg;*.bmp;*.tif;*.tiff\")])\n    # Kiểm tra file có tồn tại không\n    if not image_path:\n        raise FileNotFoundError(\"No file selected. Please select an image file.\")\n    # Tải ảnh mức xám lên, nếu là ảnh màu thì không thông qua hàm này",
+        "detail": "operator_21120184",
+        "documentation": {}
+    }
+]
