@@ -23,7 +23,7 @@ def hit_or_miss_and_display(input_image, kernel, rate=50):
     cv.waitKey(0)
     cv.destroyAllWindows()
 
-def binary_region_filling(input_image, seed_point):
+def binary_region_filling(input_image, seed_point, rate=50):
     h, w = input_image.shape
     output_image = np.zeros((h, w), np.uint8)
     output_image[seed_point] = 255
@@ -35,6 +35,17 @@ def binary_region_filling(input_image, seed_point):
         if np.array_equal(prev_image, output_image):
             break
         prev_image = output_image.copy()
+    
+    input_image_display = cv.resize(input_image, None, fx=rate, fy=rate, interpolation=cv.INTER_NEAREST)
+    cv.imshow("Original", input_image_display)
+    cv.moveWindow("Original", 0, 200)
+    
+    output_image_display = cv.resize(output_image, None, fx=rate, fy=rate, interpolation=cv.INTER_NEAREST)
+    cv.imshow("Binary Region Filling", output_image_display)
+    cv.moveWindow("Binary Region Filling", 500, 200)
+    
+    cv.waitKey(0)
+    cv.destroyAllWindows()
     
     return output_image
 
