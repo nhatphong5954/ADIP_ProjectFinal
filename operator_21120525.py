@@ -1,10 +1,11 @@
 import cv2 as cv
 import numpy as np
-
+from tkinter.filedialog import askopenfilename
+from tkinter import Tk
 #2120525 - Cao Nhật Phong
 #Cài đặt các toán tử sau
 
-def hit_or_miss_and_display(input_image, kernel, rate=50):
+def hit_or_miss(input_image, kernel, rate=50):
     output_image = cv.morphologyEx(input_image, cv.MORPH_HITMISS, kernel)
     
     kernel_display = (kernel + 1) * 127
@@ -163,3 +164,74 @@ def grayscale_top_hat_transformation(input_image, kernel, rate=50):
     
     cv.waitKey(0)
     cv.destroyAllWindows()
+
+def menu():
+    print("--------------------- Menu ---------------------")
+    print("1. Hit or Miss")
+    print("2. Binary Region Filling")
+    print("3. Grayscale Opening")
+    print("4. Grayscale Morphology Gradient")
+    print("5. Binary Opening")
+    print("6. Binary Thinning")
+    print("7. Grayscale Top-hat Transformation")
+    print("0. Exit")
+    choice = input("Your choice: ")
+    return choice
+
+
+def main():
+
+    # Ẩn cửa sổ do hàm Tk() gọi
+    Tk().withdraw()
+
+    # Người dùng chọn ảnh trên máy
+    image_path = askopenfilename(title="Select a grayscale image",
+                                filetypes=[("Image files", "*.png;*.jpg;*.jpeg;*.bmp;*.tif;*.tiff")])
+
+    # Kiểm tra file có tồn tại không
+    if not image_path:
+        raise FileNotFoundError("No file selected. Please select an image file.")
+
+    # Tải ảnh mức xám lên, nếu là ảnh màu thì không thông qua hàm này
+    image = cv.imread(image_path, cv.IMREAD_GRAYSCALE)
+
+    # Kiểm tra ảnh tải lên được không
+    if image is None:
+        raise FileNotFoundError(f"The image could not be loaded. Please check the file and try again.")
+    
+    choice = -1
+    while choice != 0:
+
+        choice = menu()
+        if choice == "0":
+            print("Exit!")
+            exit()
+            
+        
+        if choice == "1":
+            ImageOutput = hit_or_miss(image)
+
+        elif choice == "2":
+            ImageOutput = binary_region_filling(image)
+            
+        elif choice == "3":
+            ImageOutput = grayscale_opening(image_path)
+        
+        elif choice == "4":
+            ImageOutput = grayscale_morphology_gradient(image)
+            
+        elif choice == "5":
+            ImageOutput = binary_opening(image)
+
+        elif choice == "6":
+            ImageOutput = binary_thinning(image)
+
+        elif choice == "7":
+            ImageOutput = grayscale_top_hat_transformation(image_path)
+        
+        else:
+            print("Invalid choice. Please choose again.")
+            exit()
+
+if __name__ == "__main__":
+    main()
